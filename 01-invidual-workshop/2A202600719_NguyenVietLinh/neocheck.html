@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workshop — Mổ App AI Thật: Vietnam Airlines NEO</title>
+<style>
+  :root {
+    --bg: #f8f9fb;
+    --surface: #ffffff;
+    --border: #e2e5ec;
+    --text: #1e293b;
+    --muted: #64748b;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --green: #16a34a;
+    --green-bg: #f0fdf4;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --yellow: #ca8a04;
+    --yellow-bg: #fefce8;
+    --orange: #ea580c;
+    --orange-bg: #fff7ed;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.75;
+    padding: 48px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 2em; margin-bottom: 6px; color: #0f172a; letter-spacing: -.02em; }
+  h2 {
+    font-size: 1.4em; margin: 40px 0 18px; color: var(--accent);
+    border-bottom: 2px solid var(--accent); padding-bottom: 8px;
+  }
+  h3 { font-size: 1.15em; margin: 28px 0 14px; color: #334155; }
+  h4 { font-size: 1em; margin: 12px 0 6px; color: #475569; }
+  p { margin: 8px 0; }
+  ul, ol { padding-left: 22px; margin: 8px 0; }
+  li { margin: 4px 0; }
+
+  .meta { color: var(--muted); font-size: 0.9em; margin-bottom: 20px; }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92em;
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  th, td {
+    border-bottom: 1px solid var(--border); padding: 11px 15px; text-align: left;
+    vertical-align: top;
+  }
+  th { background: #f1f5f9; font-weight: 600; color: #334155; font-size: 0.85em; text-transform: uppercase; letter-spacing: .04em; }
+
+  .transcript {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; margin: 18px 0;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.88em; line-height: 1.65; white-space: pre-wrap;
+    box-shadow: var(--shadow);
+  }
+  .transcript .user { color: var(--accent); font-weight: 600; }
+  .transcript .neo { color: var(--green); font-weight: 600; }
+  .transcript .break { color: var(--red); font-weight: bold; }
+  .transcript .wrong { color: var(--orange); font-style: italic; }
+
+  .finding {
+    background: var(--accent-light); border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px;
+    margin: 18px 0; box-shadow: var(--shadow);
+  }
+  .finding h4 { color: var(--accent); margin-bottom: 8px; font-size: 1em; }
+  .finding .code {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.84em;
+    line-height: 1.6; color: #475569;
+  }
+  .finding .layer { color: var(--orange); font-weight: 600; }
+  .finding .fix { color: var(--green); font-weight: 600; }
+
+  .sketch {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; margin: 18px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.86em;
+    line-height: 1.55; white-space: pre; overflow-x: auto;
+    box-shadow: var(--shadow);
+  }
+  .sketch .asi { color: var(--red); font-weight: 600; }
+  .sketch .tobe { color: var(--green); font-weight: 600; }
+
+  .spec-block {
+    background: var(--yellow-bg); border: 1px solid var(--yellow);
+    border-radius: var(--radius); padding: 22px 26px; margin: 18px 0;
+    box-shadow: var(--shadow);
+  }
+  .spec-block ol { padding-left: 20px; color: #854d0e; }
+  .spec-block li { margin: 12px 0; }
+  .spec-block strong { color: #0f172a; }
+
+  .screenshots {
+    display: flex; gap: 18px; margin: 22px 0; flex-wrap: wrap;
+  }
+  .screenshots a { display: block; }
+  .screenshots img {
+    max-width: 290px; width: 100%; height: auto;
+    border-radius: var(--radius); border: 2px solid var(--border);
+    cursor: pointer; transition: transform .15s, box-shadow .15s;
+    box-shadow: var(--shadow);
+  }
+  .screenshots img:hover {
+    transform: scale(1.03); box-shadow: 0 4px 16px rgba(0,0,0,.1);
+    border-color: var(--accent);
+  }
+
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,.82); align-items: center; justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox:target { display: flex; }
+  .lightbox img {
+    max-width: 90vw; max-height: 90vh; border-radius: 8px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.4);
+  }
+  .lightbox .close {
+    position: absolute; top: 24px; right: 32px; color: #fff;
+    font-size: 2.2em; text-decoration: none; font-weight: 300;
+  }
+  .lightbox .close:hover { color: #ccc; }
+
+  .checklist {
+    color: var(--muted); font-size: 0.9em;
+    background: var(--green-bg); border: 1px solid #bbf7d0;
+    border-radius: var(--radius); padding: 16px 20px;
+    box-shadow: var(--shadow);
+  }
+  .checklist .done { color: var(--green); }
+
+  .tag {
+    display: inline-block; padding: 2px 10px; border-radius: 4px;
+    font-size: 0.78em; font-weight: 600; margin-right: 4px;
+  }
+  .tag-intent { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+  .tag-ux { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+  .tag-ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+
+  .row-highlight { background: #f0f4ff; }
+</style>
+</head>
+<body>
+
+<h1>Workshop — Mổ App AI Thật</h1>
+<div class="meta">
+  <strong>Thời gian:</strong> 35-45 phút &nbsp;|&nbsp;
+  <strong>Hình thức:</strong> cá nhân trước, chia sẻ theo nhóm sau &nbsp;|&nbsp;
+  <strong>Output:</strong> finding note + sketch <code>as-is / to-be</code>
+</div>
+<p>Mục tiêu không phải chấm "UI đẹp hay xấu". Mục tiêu là dùng sản phẩm thật như một bài needfinding: tìm chỗ product gãy trong workflow thật, rồi viết finding đó thành quyết định product.</p>
+
+<h2>1. Chọn một sản phẩm để dùng thử</h2>
+<table>
+  <tr><th>Sản phẩm</th><th>AI feature</th><th>Cách truy cập</th></tr>
+  <tr><td>MoMo — Moni</td><td>Trợ thủ tài chính, phân tích chi tiêu, chatbot</td><td>App MoMo</td></tr>
+  <tr class="row-highlight"><td><strong>Vietnam Airlines — NEO (đã chọn)</strong></td><td>Chatbot hỗ trợ vé, hành lý, khiếu nại</td><td>Website/Zalo VNA</td></tr>
+  <tr><td>V-App — V-AI</td><td>Trợ lý voice/text, gợi ý theo ngữ cảnh</td><td>App V-App</td></tr>
+</table>
+
+<hr>
+
+<!-- ================================================================ -->
+<!-- EXAMPLE: Vietnam Airlines NEO -->
+<!-- ================================================================ -->
+
+<h2>Ví dụ: Vietnam Airlines — NEO Chatbot</h2>
+
+<h3>1. Tổng quan sản phẩm</h3>
+<table>
+  <tr><th>Mục</th><th>Chi tiết</th></tr>
+  <tr><td>Sản phẩm</td><td>Vietnam Airlines — NEO (Trợ lý ảo)</td></tr>
+  <tr><td>Ra mắt</td><td>Tháng 2/2020</td></tr>
+  <tr><td>Công nghệ</td><td>AI + Machine Learning</td></tr>
+  <tr><td>Kênh triển khai</td><td>Website VNA, Facebook, Zalo</td></tr>
+  <tr><td>Promise</td><td>"Giải đáp nhanh chóng (24/7) mọi thắc mắc liên quan đến thông tin hành trình, mua vé, thanh toán"</td></tr>
+  <tr><td>Hình ảnh</td><td>Mascot lấy cảm hứng từ nhà bác học thiên tài — đại diện tinh thần sáng tạo, đổi mới</td></tr>
+</table>
+
+<h3>2. Promise vs Reality — Dùng thử thực tế</h3>
+<p><strong>Product hứa gì?</strong></p>
+<ul>
+  <li>Tra cứu thông tin vé máy bay, chuyến bay, hành lý 24/7</li>
+  <li>Giải đáp thắc mắc về mua vé, thanh toán, hoàn/đổi vé</li>
+  <li>Cá nhân hóa tương tác dựa trên sở thích và lịch sử tìm kiếm</li>
+  <li>Hiện diện ở "mọi điểm chạm dịch vụ"</li>
+</ul>
+
+<!-- Screenshots -->
+<h3>Screenshots từ test thực tế (03/06/2026) — click để phóng to</h3>
+<div class="screenshots">
+  <a href="#img1">
+    <img src="/home/eddiesngu/Pictures/Screenshots/Screenshot From 2026-06-03 12-04-32.png"
+         alt="NEO Chatbot - Happy Path" title="Happy Path: VN123 giờ bay">
+  </a>
+  <a href="#img2">
+    <img src="/home/eddiesngu/Pictures/Screenshots/Screenshot From 2026-06-03 12-04-23.png"
+         alt="NEO Chatbot - Multi-intent và Chặn booking code" title="Multi-intent + Chặn vô lý">
+  </a>
+  <a href="#img3">
+    <img src="/home/eddiesngu/Pictures/Screenshots/Screenshot From 2026-06-03 12-04-14.png"
+         alt="NEO Chatbot - Loop mã sai" title="Loop mã sai, không escape">
+  </a>
+</div>
+
+<!-- Lightbox modals -->
+<div class="lightbox" id="img1">
+  <a href="#" class="close">&times;</a>
+  <img src="/home/eddiesngu/Pictures/Screenshots/Screenshot From 2026-06-03 12-04-32.png" alt="NEO Chatbot - Happy Path">
+</div>
+<div class="lightbox" id="img2">
+  <a href="#" class="close">&times;</a>
+  <img src="/home/eddiesngu/Pictures/Screenshots/Screenshot From 2026-06-03 12-04-23.png" alt="NEO Chatbot - Multi-intent và Chặn booking code">
+</div>
+<div class="lightbox" id="img3">
+  <a href="#" class="close">&times;</a>
+  <img src="/home/eddiesngu/Pictures/Screenshots/Screenshot From 2026-06-03 12-04-14.png" alt="NEO Chatbot - Loop mã sai">
+</div>
+
+<h4>Evidence — Transcript thực tế</h4>
+<div class="transcript">
+<span class="user">User:</span> Chuyến bay VN123 ngày mai giờ nào?
+<span class="neo">NEO:</span>  Quý khách vui lòng cung cấp số vé hoặc mã đặt chỗ...
+<span class="user">User:</span> VN123 ngày mai
+<span class="neo">NEO:</span>  Quý khách vui lòng xác nhận lại thông tin:
+         * Số hiệu chuyến bay: VN123
+         * Ngày khởi hành: 04/06/2026
+         Thông tin trên có chính xác không ạ?
+<span class="user">User:</span> đúng
+<span class="neo">NEO:</span>  Chuyến bay VN123 khởi hành từ Đà Nẵng 11:55, hạ cánh TP.HCM 13:25 [OK]
+----------------------------------------------------------------
+<span class="user">User:</span> Tôi muốn đổi vé từ Hà Nội đi Đà Nẵng và cho biết hành lý ký gửi bao nhiêu kg?
+<span class="neo">NEO:</span>  Hành lý nội địa: Thương gia 32kg, PTĐB 32kg, Phổ thông 23kg.
+         Đổi vé: tự đổi khi VNA đổi giờ, gửi yêu cầu tại change-ticket,
+         hoặc gọi 1900 1100. [OK]
+<span class="break">------------------------ x GÃY x ------------------------</span>
+<span class="user">User:</span> Chuyến bay delayed thì được hỗ trợ gì?
+<span class="neo">NEO:</span>  Quý khách vui lòng cung cấp số vé hoặc mã đặt chỗ...
+<span class="user">User:</span> Hành lý của tôi bị mất, tôi muốn khiếu nại
+<span class="neo">NEO:</span>  Quý khách vui lòng cung cấp số vé hoặc mã đặt chỗ...
+<span class="user">User:</span> vn124
+<span class="neo">NEO:</span>  <span class="wrong">[Trả lời CHÍNH SÁCH DELAY — sai context!]</span>
+         Khi chuyến bay bị chậm: 1-2h phục vụ đồ uống, 2-6h phục vụ ăn...
+<span class="neo">NEO:</span>  <span class="wrong">[Tiếp tục trả lời KHIẾU NẠI HÀNH LÝ — context bị lẫn]</span>
+         Khi hành lý thất lạc: lập PIR tại sân bay, truy cập Worldtracer...
+<span class="break">------------------------ x GÃY x ------------------------</span>
+<span class="user">User:</span> vn2813
+<span class="neo">NEO:</span>  Thông tin chưa hợp lệ, quý khách vui lòng cung cấp lại...
+<span class="neo">NEO:</span>  Quý khách vui lòng cung cấp thêm email để tra cứu hành lý ký gửi.
+         <span class="wrong">(đoán bừa! User KHÔNG hỏi hành lý!)</span>
+</div>
+
+<h4>Điểm gãy thực tế</h4>
+<table>
+  <tr><th>#</th><th>Trigger</th><th>AI làm gì</th><th>Hậu quả</th><th>Layer</th></tr>
+  <tr>
+    <td>1</td>
+    <td>Hỏi chính sách chung (delayed, khiếu nại hành lý)</td>
+    <td>Chặn bằng "cung cấp mã đặt chỗ" dù câu hỏi không cần booking</td>
+    <td>User bị chặn vô lý, phải fake mã (vn124) để được trả lời</td>
+    <td><span class="tag tag-intent">Intent</span></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>User hỏi 2 câu liên tiếp không có mã, rồi cung cấp vn124</td>
+    <td>Trả lời chính sách delay (câu 1) khi user đang chờ câu về khiếu nại hành lý (câu 2)</td>
+    <td>Context bị lẫn, user không biết câu trả lời nào cho câu hỏi nào</td>
+    <td><span class="tag tag-intent">Intent</span> <span class="tag tag-ux">UX Recovery</span></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Cung cấp mã booking sai (vn2813)</td>
+    <td>Loop hỏi lại mã &rarr; không escape &rarr; đoán user muốn "tra cứu hành lý"</td>
+    <td>User bị kẹt, không nút "chuyển tư vấn viên"</td>
+    <td><span class="tag tag-ux">UX Recovery</span></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Multi-intent: đổi vé + hành lý</td>
+    <td>Trả lời được cả 2 ý trong 1 response</td>
+    <td>Khá tốt</td>
+    <td><span class="tag tag-ok">OK</span></td>
+  </tr>
+</table>
+
+<h3>3. Vẽ 4 Paths</h3>
+<table>
+  <tr><th>Path</th><th>Quan sát</th></tr>
+  <tr>
+    <td><strong>Happy</strong></td>
+    <td>User hỏi câu cụ thể có booking code &rarr; NEO confirm lại trước khi trả lời, đưa giờ cất/hạ cánh chính xác. Multi-intent cũng xử lý tốt. Các câu chính sách chung nếu user chịu cung cấp mã &rarr; NEO trả lời chi tiết, có cấu trúc.</td>
+  </tr>
+  <tr>
+    <td><strong>Low-confidence</strong></td>
+    <td>Không có clarification path. NEO không bao giờ nói "tôi không chắc". Thay vào đó fallback về "cung cấp mã đặt chỗ" &mdash; biến câu hỏi chung thành câu hỏi cần booking code.</td>
+  </tr>
+  <tr>
+    <td><strong>Failure</strong></td>
+    <td>Khi mã sai: loop hỏi lại &rarr; không nút "tôi không có mã", không "chuyển tư vấn viên" &rarr; cuối cùng đoán bừa intent và hỏi email. User bị kẹt hoàn toàn.</td>
+  </tr>
+  <tr>
+    <td><strong>Correction</strong></td>
+    <td>Không có cơ chế correction. Không nút "ý tôi không phải vậy", không nút "thử lại". Context bị lẫn (khiếu nại hành lý &rarr; trả lời delay policy).</td>
+  </tr>
+</table>
+
+<h3>4. Findings &rarr; Product Decisions</h3>
+
+<div class="finding">
+  <h4>Finding 1: Chặn booking code cho câu hỏi chính sách chung</h4>
+  <div class="code">
+  Khi user hỏi câu hỏi chung về chính sách ("delayed được hỗ trợ gì?",
+  "hành lý mất khiếu nại thế nào?"),
+  NEO yêu cầu mã đặt chỗ trước khi trả lời (dù câu hỏi không cần booking),
+  hậu quả là user bị chặn vô lý, phải cung cấp mã fake để được trả lời,
+  hoặc bỏ cuộc và gọi tổng đài.<br><br>
+  <span class="layer">Layer: Intent</span><br>
+  <span class="fix">Fix: classify intent — nếu câu hỏi là general policy, trả lời ngay,
+  kèm optional "nếu bạn muốn tra cứu case cụ thể, cung cấp mã".</span>
+  </div>
+</div>
+
+<div class="finding">
+  <h4>Finding 2: Context bị lẫn giữa các câu hỏi liên tiếp</h4>
+  <div class="code">
+  Khi user hỏi 2 câu liên tiếp ("delayed hỗ trợ gì?" &rarr; "hành lý mất khiếu nại thế nào?"),
+  rồi cung cấp mã booking (vn124),
+  NEO trả lời câu thứ nhất (delay policy) dù user đang chờ câu thứ hai,
+  hậu quả là context bị lẫn, user không biết câu trả lời nào cho câu hỏi nào.<br><br>
+  <span class="layer">Layer: Intent + UX Recovery</span><br>
+  <span class="fix">Fix: khi có 2+ câu hỏi pending, NEO nên breakdown:
+  "Tôi hiểu bạn hỏi 2 vấn đề: 1) chính sách delay, 2) khiếu nại hành lý.
+  Trước tiên về delay: [answer]. Về khiếu nại: [answer]."</span>
+  </div>
+</div>
+
+<div class="finding">
+  <h4>Finding 3: Loop booking code sai không có escape hatch</h4>
+  <div class="code">
+  Khi user cung cấp mã booking sai (vn2813),
+  NEO loop: "thông tin không hợp lệ" &rarr; hỏi lại mã &rarr; user không trả lời &rarr;
+  đoán bừa "tra cứu hành lý ký gửi" và hỏi email,
+  hậu quả là user bị kẹt, không có nút "tôi không có mã",
+  không có "chuyển tư vấn viên", không biết đường thoát.<br><br>
+  <span class="layer">Layer: UX Recovery</span><br>
+  <span class="fix">Fix: sau 1-2 lần mã sai, hiện options:
+  "Tôi không có mã booking | Chuyển tư vấn viên | Hỏi câu khác"</span>
+  </div>
+</div>
+
+<div class="finding">
+  <h4>Finding 4: Không có correction/feedback path</h4>
+  <div class="code">
+  Sau mỗi câu trả lời của NEO, user không có cách nào signal
+  "câu trả lời này không đúng/tôi không hỏi cái này",
+  hậu quả là context tiếp tục bị lệch và system không học từ failure.<br><br>
+  <span class="layer">Layer: UX Recovery + Correction</span><br>
+  <span class="fix">Fix: thêm nút Like/Dislike sau mỗi câu trả lời — nếu Dislike thì NEO retry/rephrase, log để train.</span>
+  </div>
+</div>
+
+<h3>5. Sketch As-is / To-be</h3>
+
+<div class="sketch">
+<span class="asi">=== AS-IS ===</span>
+User hỏi chính sách chung
+  &rarr; <span class="asi">NEO: "cung cấp mã đặt chỗ" (CHẶN vô lý)</span>
+    &rarr; User fake mã &rarr; NEO trả lời (sai intent, đúng content)
+    &rarr; User hỏi câu 2 không mã &rarr; NEO chặn tiếp &rarr; User thoát
+
+User cung cấp mã sai
+  &rarr; <span class="asi">NEO: "thông tin không hợp lệ" &rarr; hỏi lại mã (LOOP)</span>
+    &rarr; Không exit &rarr; đoán bừa "tra cứu hành lý" &rarr; hỏi email
+    &rarr; User bị kẹt, không có "chuyển agent"
+
+<span class="tobe">=== TO-BE ===</span>
+User hỏi &rarr; NEO classify intent
+  +- <span class="tobe">General policy?</span> &rarr; Trả lời ngay + optional "cần tra case cụ thể?"
+  +- <span class="tobe">Cần booking cụ thể?</span> &rarr; Hỏi mã &rarr; đúng thì trả lời
+  |   -- Mã sai 2 lần &rarr; <span class="tobe">"Bạn muốn [thử lại | hỏi khác | gặp tư vấn viên]?"</span>
+  +- <span class="tobe">Multi-question?</span> &rarr; "Bạn hỏi X vấn đề, trả lời từng cái:"
+  -- <span class="tobe">Confidence thấp?</span> &rarr; "Ý bạn là A hay B?" (clarification)
+
+Sau mỗi response: <span class="tobe">Like/Dislike feedback</span> &rarr; nếu Dislike &rarr; retry với rephrase
+</div>
+
+<h3>6. Đề xuất SPEC</h3>
+<div class="spec-block">
+  <ol>
+    <li><strong>Classify intent trước khi require input:</strong> nếu câu hỏi là general policy, trả lời ngay không cần booking code; chỉ require booking code khi câu hỏi cần truy xuất dữ liệu cá nhân.</li>
+    <li><strong>Breakdown multi-question:</strong> khi user hỏi 2+ câu pending, trả lời tuần tự có label rõ ràng, không FIFO queue mù.</li>
+    <li><strong>Escape hatch cho booking sai:</strong> sau 2 lần mã sai, hiện options "tôi không có mã / hỏi câu khác / gặp tư vấn viên" thay vì đoán bừa intent.</li>
+    <li><strong>Feedback loop:</strong> Like/Dislike sau mỗi response của NEO — nếu Dislike thì NEO rephrase hoặc hỏi lại, và log để train model.</li>
+  </ol>
+</div>
+
+<h3>7. Tự kiểm</h3>
+<div class="checklist">
+  <span class="done">[x]</span> Có 3 screenshot thực tế (click để phóng to)<br>
+  <span class="done">[x]</span> Có đủ 4 paths (Happy, Low-confidence, Failure, Correction)<br>
+  <span class="done">[x]</span> 4 findings viết thành product decision<br>
+  <span class="done">[x]</span> Sketch có as-is và to-be<br>
+  <span class="done">[x]</span> SPEC: 4 điểm cần sửa (classify intent, breakdown multi-question, escape hatch, feedback loop)
+</div>
+
+</body>
+</html>
