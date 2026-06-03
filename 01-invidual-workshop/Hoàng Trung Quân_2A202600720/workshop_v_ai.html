@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Workshop: Mổ Sản Phẩm V-AI (V-App)</title>
+    <style>
+        :root {
+            --primary: #0052CC;
+            --primary-dark: #0747A6;
+            --primary-light: #DEEBFF;
+            --text-dark: #172B4D;
+            --text-muted: #5E6C84;
+            --bg-light: #F4F5F7;
+            --card-bg: #FFFFFF;
+            --danger: #DE3545;
+            --danger-light: #FFEBE6;
+            --success: #00875A;
+            --success-light: #E3FCEF;
+            --warning: #FF9900;
+            --warning-light: #FFFAE6;
+            --border: #DFE1E6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(23, 43, 77, 0.08);
+        }
+
+        header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .meta-info {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        h2 {
+            font-size: 20px;
+            color: var(--primary-dark);
+            margin-top: 32px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: var(--primary);
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .promise-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 24px;
+        }
+
+        .promise-box strong {
+            color: var(--primary-dark);
+        }
+
+        .trial-list {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .trial-item {
+            background: var(--bg-light);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .trial-item .question {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .trial-item .result {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .gap-container {
+            display: table;
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: separate;
+            border-spacing: 12px 0;
+        }
+
+        .gap-box {
+            display: table-cell;
+            width: 50%;
+            padding: 20px;
+            border-radius: 8px;
+            vertical-align: top;
+        }
+
+        .gap-expectation {
+            background-color: #E6F4EA;
+            border: 1px solid #B8E1C4;
+        }
+
+        .gap-expectation h4 {
+            color: var(--success);
+            margin-bottom: 8px;
+        }
+
+        .gap-reality {
+            background-color: var(--danger-light);
+            border: 1px solid #FFBDAD;
+        }
+
+        .gap-reality h4 {
+            color: var(--danger);
+            margin-bottom: 8px;
+        }
+
+        /* Flowchart styling */
+        .flowchart-wrapper {
+            background: var(--bg-light);
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .flow-node {
+            display: inline-block;
+            background: var(--card-bg);
+            padding: 12px 20px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-weight: 500;
+            min-width: 200px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .flow-arrow {
+            margin: 10px 0;
+            color: var(--text-muted);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .flow-split {
+            display: table;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .flow-branch {
+            display: table-cell;
+            width: 50%;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        .node-danger {
+            background: var(--danger-light);
+            border-color: #FFBDAD;
+            color: #BF2600;
+            font-weight: 600;
+        }
+
+        .node-success {
+            background: var(--success-light);
+            border-color: #ABF5D1;
+            color: #006644;
+            font-weight: 600;
+        }
+
+        .mockup-container {
+            background: #1E1E24;
+            border-radius: 12px;
+            padding: 20px;
+            color: #FFFFFF;
+            font-family: inherit;
+            max-width: 400px;
+            margin: 20px auto;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+        }
+
+        .mockup-msg {
+            background: #2A2B36;
+            padding: 12px 16px;
+            border-radius: 12px 12px 12px 0;
+            margin-bottom: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .mockup-buttons {
+            display: block;
+        }
+
+        .mockup-btn {
+            display: block;
+            width: 100%;
+            background: transparent;
+            border: 1px solid #3B82F6;
+            color: #3B82F6;
+            padding: 10px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mockup-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .decision-box {
+            background: linear-gradient(135deg, #0747A6 0%, #0052CC 100%);
+            color: #FFFFFF;
+            padding: 28px;
+            border-radius: 10px;
+            margin-top: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .decision-box h3 {
+            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .decision-box p {
+            color: #FFFFFF;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        ol {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .gap-container {
+                display: block;
+            }
+            .gap-box {
+                display: block;
+                width: 100%;
+                margin-bottom: 12px;
+            }
+            .flow-split {
+                display: block;
+            }
+            .flow-branch {
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <span class="badge">Workshop Report</span>
+            <h1>Mổ Sản Phẩm V-AI (V-App)</h1>
+            <div class="meta-info">Phân tích chuyên sâu về UX/Luồng Trải Nghiệm & Đề Xuất Cải Tiến Cốt Lõi</div>
+        </header>
+
+        <!-- SECTION 1 -->
+        <section>
+            <h2>1. Chọn Sản Phẩm & Trải Nghiệm Thực Tế (Trial Run)</h2>
+            <p><strong>Sản phẩm lựa chọn:</strong> Trợ lý ảo <strong>V-AI</strong> tích hợp trên siêu ứng dụng <strong>V-App</strong>.</p>
+            
+            <div class="promise-box">
+                <strong>Lời hứa sản phẩm (Promise):</strong> Hỗ trợ tìm kiếm thông tin nhanh, gợi ý dịch vụ cá nhân hóa, kết nối dữ liệu đa nền tảng (Green SM, Health Connect...) và dẫn dắt người dùng thực hiện các hành động tiếp theo một cách liền mạch.
+            </div>
+
+            <h3>Kịch bản kiểm tra thực tế (Trial Run)</h3>
+            <ul class="trial-list" style="margin-top: 12px; padding-left: 0;">
+                <li class="trial-item">
+                    <div class="question">🔹 Câu 1 (Hỏi thông tin tổng quan): "Tôi hỏi câu V-ai của V-app ở đâu?"</div>
+                    <div class="result"><strong>Kết quả:</strong> AI trả lời tốt, định vị được sản phẩm thuộc khối VinSmart Future.</div>
+                </li>
+                <li class="trial-item">
+                    <div class="question">🔹 Câu 2 (Hỏi tính năng): "Tính năng chính của V-ai"</div>
+                    <div class="result"><strong>Kết quả:</strong> AI liệt kê đầy đủ, rõ ràng các danh mục tính năng hỗ trợ.</div>
+                </li>
+                <li class="trial-item">
+                    <div class="question">🔹 Câu 3 (Tra cứu tác vụ sâu): "Tìm hóa đơn dịch vụ cụ thể"</div>
+                    <div class="result"><strong>Kết quả:</strong> AI đưa ra hướng dẫn chi tiết quy trình tìm hóa đơn chung và hóa đơn liên kết dịch vụ di chuyển Green SM.</div>
+                </li>
+                <li class="trial-item">
+                    <div class="question">🔹 Câu 4 (Stress-test / Bẻ lái ngữ cảnh):</div>
+                    <div class="result">Nhóm câu hỏi dồn dập về "điểm yếu", "cách khai thác điểm yếu" khi người dùng đang trong ngữ cảnh làm bài tập nhóm.</div>
+                </li>
+            </ul>
+
+            <h3>Điểm gãy phát hiện (Expectation vs. Reality)</h3>
+            <div class="gap-container">
+                <div class="gap-box gap-expectation">
+                    <h4>Kỳ vọng (Expectation)</h4>
+                    <p>Khi người dùng thể hiện sự bối rối hoặc giải thích lý do khách quan (<em>"Thôi tôi đang làm nhiệm vụ nhóm...", "bế tắc quá"</em>), trợ lý ảo cần nhận diện được ngữ cảnh để đưa ra các gợi ý mang tính học thuật, hoặc từ chối khéo léo và hướng dẫn họ quay lại luồng chính.</p>
+                </div>
+                <div class="gap-box gap-reality">
+                    <h4>Thực tế (Reality)</h4>
+                    <p>AI bị rơi vào trạng thái kích hoạt bộ lọc an toàn mặc định với câu trả lời hệ thống vô cùng cứng nhắc: <span style="color:var(--danger); font-style: italic;">"Yêu cầu này không thể được xử lý vì có dấu hiệu cố gắng vượt qua hoặc vô hiệu hóa các cơ chế an toàn..."</span>. Luồng tương tác bị chặn đứng hoàn toàn.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section>
+            <h2>2. Vẽ Luồng Hiện Tại (As-is Flow)</h2>
+            <p>Khi gặp các câu hỏi mang tính thử thách hoặc nhạy cảm từ người dùng, luồng xử lý hiện tại của V-AI đang bị kẹt tại bộ lọc an toàn:</p>
+            
+            <div class="flowchart-wrapper">
+                <div class="flow-node">User gõ câu hỏi bế tắc/thử thách</div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-node" style="background: var(--warning-light); border-color: var(--warning);">AI quét bộ lọc an toàn (Safety Filter)</div>
+                <div class="flow-arrow">↓</div>
+                
+                <div class="flow-split">
+                    <div class="flow-branch">
+                        <div class="flow-node node-success">Nhánh An toàn</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-node" style="font-size: 14px;">Trả lời bình thường</div>
+                    </div>
+                    <div class="flow-branch">
+                        <div class="flow-node node-danger">Nhánh Nghi ngờ (Borderline)</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-node node-danger" style="border-style: dashed;">[ĐIỂM KẸT]<br>Trả ra câu từ chối hệ thống cứng nhắc</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-node" style="background: #333; color: #fff;">[HẬU QUẢ]<br>User bế tắc, rời bỏ app ❌</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section>
+            <h2>3. Sửa Path Yếu Nhất (To-be Flow)</h2>
+            <p>Chúng ta sẽ sửa ngay tại <strong>[Điểm kẹt]</strong> khi hệ thống nhận diện câu hỏi chạm ngưỡng nhạy cảm (Borderline/Safety trigger) nhưng user đang thể hiện sự bực bội hoặc bế tắc. Thay vì chặn đứng bằng một câu thông báo lỗi hệ thống, chúng ta áp dụng cơ chế <strong>Hỏi lại (Clarification)</strong> và <strong>Gợi ý Nút bấm (Button)</strong> để dẫn dắt user quay lại luồng an toàn.</p>
+            
+            <h3>Đề xuất luồng mới (To-be Flow):</h3>
+            <ol>
+                <li><strong>Bước 1:</strong> Khi user hỏi về điểm yếu hoặc cố tình thử thách AI, hệ thống không từ chối thẳng thừng mà đưa ra câu thoại mang tính xoa dịu và định hướng.</li>
+                <li><strong>Bước 2 (Hỏi lại + Gợi ý):</strong> AI phản hồi khéo léo để nhận diện lại mục đích học thuật/hỗ trợ của user.</li>
+                <li><strong>Bước 3 (Actionable UI):</strong> Hiển thị các nút bấm gợi ý hành động tiếp theo trực quan.</li>
+            </ol>
+
+            <div style="text-align: center; margin: 20px 0; color: var(--text-muted); font-size: 14px; font-weight: 600;">
+                📱 GIAO DIỆN MINH HỌA TRÊN V-APP (MOCKUP)
+            </div>
+            
+            <!-- Phone UI Mockup -->
+            <div class="mockup-container">
+                <div class="mockup-msg">
+                    🤖 <strong>V-AI:</strong> Có vẻ bạn đang gặp khó khăn trong việc tìm hiểu hệ thống hoặc làm bài tập? Tôi không thể cung cấp các thông tin bảo mật, nhưng tôi có thể giúp bạn các chủ đề sau:
+                </div>
+                <div class="mockup-buttons">
+                    <div class="mockup-btn">📄 Xem hướng dẫn sử dụng V-App</div>
+                    <div class="mockup-btn">🧠 Tìm hiểu công nghệ AI của V-AI</div>
+                    <div class="mockup-btn">📞 Kết nối với tổng đài hỗ trợ (Handoff)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section>
+            <h2>4. Quyết Định Sản Phẩm (Product Decision)</h2>
+            <div class="decision-box">
+                <h3>📌 PRODUCT DECISION</h3>
+                <p>"Để khắc phục việc user bị kẹt và rời bỏ ứng dụng khi kích hoạt bộ lọc an toàn của V-AI, chúng tôi quyết định thay thế câu từ chối hệ thống bằng một luồng thoại xoa dịu, chủ động làm rõ mục đích (Clarification) kết hợp hiển thị các Button gợi ý hành động để dẫn dắt người dùng quay trở lại luồng trải nghiệm tính năng cốt lõi một cách mượt mà."</p>
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>
