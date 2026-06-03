@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo Mổ Sản Phẩm AI - Moni</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.8;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        h2 {
+            color: #1f4e79;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: #34495e;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .query-box {
+            background: #eef7ff;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .compare-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .reality {
+            flex: 1;
+            min-width: 300px;
+            background: #ffecec;
+            border-left: 5px solid #e74c3c;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .expectation {
+            flex: 1;
+            min-width: 300px;
+            background: #ecfff0;
+            border-left: 5px solid #27ae60;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .flow {
+            background: #f8f9fa;
+            padding: 20px;
+            overflow-x: auto;
+            white-space: pre;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: Consolas, monospace;
+        }
+
+        .decision {
+            background: #fff8dc;
+            border-left: 6px solid #f39c12;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        ul {
+            padding-left: 25px;
+        }
+
+        .screenshot {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .app-image {
+            max-width: 100%;
+            width: 500px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s;
+        }
+
+.app-image:hover {
+    transform: scale(1.02);
+}
+    </style>
+</head>
+
+<body>
+
+    <h1>📑 BÁO CÁO MỔ SẢN PHẨM AI THẬT</h1>
+
+    <div class="section">
+        <p><strong>Đặng Minh Chức - 2A202600611</strong> </p>
+
+        <p><strong>Sản phẩm kiểm thử:</strong> Trợ lý tài chính AI - Moni (Tích hợp trong ứng dụng MoMo)</p>
+
+        <p><strong>Mục tiêu:</strong> Kiểm thử luồng xử lý ngôn ngữ tự nhiên (NLP) trong ngữ cảnh quản lý tài chính phức tạp.</p>
+    </div>
+
+    <div class="section">
+        <h2>🛠️ BƯỚC 1: DÙNG THỬ (KỲ VỌNG VS THỰC TẾ)</h2>
+
+        <h3>Lời hứa của sản phẩm (Promise)</h3>
+
+        <p>
+            Moni hứa hẹn là một trợ lý thông minh giúp tự động nhận diện ý định (Intent),
+            bóc tách số tiền từ câu lệnh tự nhiên của người dùng để ghi chép chi tiêu chính xác
+            và phân tích dòng tiền hợp lý.
+        </p>
+
+        <h3>Nhật ký kiểm thử qua 2 Query thực tế</h3>
+
+        <h3>Mẫu kiểm thử 1: Thu nhập đi kèm mục đích sử dụng mập mờ</h3>
+
+        <div class="query-box">
+            <strong>Dữ liệu đầu vào (Query):</strong><br>
+            "Hôm qua đi chợ hết 200k, tối mama chuyển cho 500k đi ăn tiệc,
+            tính hộ xem còn âm hay dương nè"
+        </div>
+
+        <p><strong>Hình ảnh minh chứng lỗi gãy trải nghiệm:</strong></p>
+
+        <div class="screenshot">
+            <img src="images/500k.jpg"
+                alt="Kết quả xử lý của Moni với khoản tiền mẹ chuyển"
+                class="app-image">
+        </div>
+        <div class="compare-container">
+
+            <div class="reality">
+                <h4>❌ Thực tế AI xử lý</h4>
+
+                <p>
+                    Moni thực hiện một phép toán cộng trừ cơ học phẳng lì:
+                    Lấy +500.000đ (tự động xếp vào danh mục Lương)
+                    trừ đi −200.000đ (Đi chợ)
+                    để kết luận người dùng dư 300.000đ.
+                </p>
+            </div>
+
+            <div class="expectation">
+                <h4>✅ Kỳ vọng thực tế</h4>
+
+                <p>
+                    Không đạt kỳ vọng.
+                </p>
+
+                <p>
+                    Khoản tiền 500k từ mẹ chuyển là có mục đích cụ thể ("đi ăn tiệc").
+                    AI đáng lẽ không được tự ý coi đây là một khoản thặng dư ròng mà phải kích hoạt luồng hỏi lại:
+                </p>
+
+                <blockquote>
+                    "Khoản 500k đi ăn tiệc này bạn đã tiêu hết bao nhiêu rồi?"
+                </blockquote>
+
+                <p>
+                    để ghi nhận phần chi tiêu ẩn đó, thay vì vội vàng kết luận người dùng
+                    đang dư tiền để đi ăn bánh tráng trộn.
+                </p>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <h3>Mẫu kiểm thử 2: Bài toán chia hóa đơn nhóm (Split Bill) và công nợ</h3>
+
+        <div class="query-box">
+            <strong>Dữ liệu đầu vào (Query):</strong><br>
+            "Hôm qua nhóm tao đi ăn lẩu hết 1 củ 2, tao trả trước bằng ví.
+            có 3 đứa chuyển khoản trả lại tao mỗi đứa 300k rồi,
+            còn 1 đứa chưa trả. tính hộ xem tao đã tiêu bao nhiêu tiền vào bữa lẩu đó"
+        </div>
+
+        <p><strong>Hình ảnh minh chứng lỗi gãy trải nghiệm:</strong></p>
+        <div class="screenshot">
+            <img src="images/lau.jpg"
+                 alt="Kết quả xử lý của Moni với bài toán chia tiền lẩu"
+                 class="app-image">
+        </div>
+        <div class="compare-container">
+
+            <div class="reality">
+                <h4>❌ Thực tế AI xử lý</h4>
+
+                <p>
+                    Moni lấy 1.200.000đ (trả trước)
+                    trừ đi 900.000đ (3 đứa trả)
+                    rồi khẳng định chắc nịch:
+                </p>
+
+                <blockquote>
+                    "Vậy bạn đã tiêu 300.000đ cho bữa lẩu đó"
+                </blockquote>
+            </div>
+
+            <div class="expectation">
+                <h4>✅ Kỳ vọng thực tế</h4>
+
+                <p>
+                    Không đạt kỳ vọng.
+                </p>
+
+                <p>
+                    Phép tính của Moni chỉ là con số số dư tiền mặt hiện tại
+                    (thiệt hại tạm thời), chứ không phải số tiền thực tế user phải chịu
+                    cho phần ăn của mình.
+                </p>
+
+                <p>
+                    Tổng thiệt hại hiện tại đúng là 300.000đ,
+                    nhưng số tiền cuối cùng user thực tế tiêu sẽ phụ thuộc hoàn toàn vào
+                    thỏa thuận với người bạn cuối cùng
+                    (Người đó sẽ trả lại bao nhiêu, có chia đều không...).
+                </p>
+
+                <p>
+                    Việc AI đưa ra một con số đóng băng cố định khiến luồng theo dõi công nợ bị đứt gãy.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>📊 BƯỚC 2: VẼ LUỒNG HIỆN TẠI (AS-IS FLOW)</h2>
+
+        <p>
+            Sơ đồ phác thảo hành trình hiện tại của người dùng khi cả 2 nhánh xử lý đều đi vào điểm bế tắc (Failure Path):
+        </p>
+
+        <div class="flow">
+[User nhập Câu lệnh chứa ngữ cảnh phức tạp]
+                    │
+                    ▼
+      [Moni phân tích cú pháp NLP]
+                    │
+ ┌──────────────────┴──────────────────┐
+ ▼                                     ▼
+{Ngữ cảnh: Mama cho 500k}    {Ngữ cảnh: Chia tiền lẩu 1M2}
+ ▼                                     ▼
+[AI tính toán cơ học: +500k] [AI tính toán cơ học: 1M2 - 900k]
+ ▼                                     ▼
+[Kết luận: Dư 300k ăn tiệc]  [Kết luận: Bạn đã tiêu 300k]
+ ▼                                     ▼
+🛑【USER BỊ KẸT】🛑             🛑【USER BỊ KẸT】🛑
+(AI không hỏi khoản tiệc đã tiêu) (AI bỏ qua biến số đứa bạn cuối)
+ ▼                                     ▼
+ └──────────────────┬──────────────────┘
+                    ▼
+[Correction: User bỏ chat, tự tính tay bên ngoài]
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>🛠️ BƯỚC 3: SỬA MỘT PATH YẾU NHẤT (TO-BE FLOW ĐỀ XUẤT)</h2>
+
+        <p>
+            <strong>Mắt xích yếu nhất:</strong>
+            AI đang cố gắng "đoán mò" và đưa ra câu trả lời quyết định quá sớm
+            khi dữ liệu đầu vào còn các biến số động
+            (Khoản tiệc chưa tiêu hết bao nhiêu?
+            Thỏa thuận chia tiền với đứa bạn cuối là gì?).
+        </p>
+
+        <h3>Giải pháp cải tiến (To-Be Flow)</h3>
+
+        <p>
+            Áp dụng cơ chế Hỏi lại (Clarification) kết hợp Nút bấm tương tác nhanh
+            (Interactive Buttons) để làm sạch dữ liệu trước khi tính toán.
+        </p>
+
+        <div class="flow">
+[User nhập câu lệnh chia tiền lẩu 1M2]
+             │
+             ▼
+[Moni nhận diện Intent: Split Bill]
+             │
+             ▼
+🤖 [Moni chủ động kích hoạt Luồng Hỏi Lại]
+
+"Tôi ghi nhận tổng hóa đơn là 1.200.000đ,
+hiện tại bạn đã thu về 900.000đ.
+Để tính chính xác số tiền bạn tiêu,
+vui lòng cho biết hình thức chia tiền:"
+
+      ┌────────────┬────────────┬────────────┐
+      ▼            ▼            ▼
+ [Chia đều]     [Tôi bao]    [Nhập số khác]
+
+      ▼
+
+[Moni tính toán động]
+
+"Hiện tại thiệt hại tạm thời của bạn là 300.000đ.
+Nếu chia đều 5 người (240k/người),
+3 người trước đã trả dư,
+bạn cần thu từ người cuối cùng bao nhiêu?"
+
+──► (Tích hợp một Form điền số linh hoạt ngay trong chat)
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <h2>🎯 OUTPUT: CÂU QUYẾT ĐỊNH SẢN PHẨM (PRODUCT DECISION)</h2>
+
+        <div class="decision">
+            "Thay vì ép Chatbot AI đưa ra câu trả lời quyết định ngay lập tức bằng các phép tính cơ học khi gặp ngữ cảnh tài chính có biến số động, sản phẩm cần chuyển dịch sang thiết kế AI UX dạng hội thoại hai chiều (Multi-turn Conversation) – chủ động đặt câu hỏi làm rõ (Clarification) kèm UI Card tương tác để người dùng xác nhận các khoản tiêu chi tiết và điều kiện công nợ trước khi ghi sổ."
+        </div>
+
+    </div>
+
+</body>
+</html>
