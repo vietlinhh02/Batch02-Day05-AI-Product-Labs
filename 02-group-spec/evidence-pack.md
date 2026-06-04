@@ -2,7 +2,7 @@
 
 ## 1. Nhóm và track
 
-**Tên nhóm:** (điền tên nhóm)
+**Tên nhóm:** abc123
 **Thành viên:** Mai Ngọc Duy - 2A202600736, Hoàng Trung Quân - 2A202600720, Đặng Minh Chức - 2A20260061, Bùi Hoàng Linh - 2A202600804, Nguyễn Viết Linh - 2A202600719 *
 **Track:** A — Learning OS (Vin AI Thực Chiến)
 **Product/app đã chọn:** Discord lớp học
